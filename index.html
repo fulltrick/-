@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>顔と名前記録アプリ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>顔と名前記録アプリ</h1>
+            <nav>
+                <button id="upload-tab" class="tab-button active">写真アップロード</button>
+                <button id="list-tab" class="tab-button">登録一覧</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- アップロード画面 -->
+            <div id="upload-section" class="section active">
+                <div class="upload-area">
+                    <h2>写真を選択してください</h2>
+                    <div class="upload-options">
+                        <input type="file" id="file-input" accept="image/*" style="display: none;">
+                        <button id="file-button">ファイルを選択</button>
+                        <button id="camera-button">カメラで撮影</button>
+                    </div>
+                    <video id="video" autoplay playsinline style="display: none;"></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <div id="capture-controls" style="display: none;">
+                        <button id="capture-button">撮影</button>
+                        <button id="cancel-button">キャンセル</button>
+                    </div>
+                </div>
+
+                <!-- 画像表示エリア -->
+                <div id="image-area" style="display: none;">
+                    <h3>アップロードされた画像</h3>
+                    <div class="image-container">
+                        <img id="uploaded-image" alt="アップロード画像">
+                        <canvas id="preview-canvas" style="display: none;"></canvas>
+                    </div>
+                    
+                    <!-- 検出設定 -->
+                    <div class="detection-settings">
+                        <h4>検出設定</h4>
+                        <div class="setting-item">
+                            <label for="confidence-slider">検出感度: <span id="confidence-value">0.5</span></label>
+                            <input type="range" id="confidence-slider" min="0.1" max="0.9" step="0.1" value="0.5">
+                        </div>
+                        <div class="setting-item">
+                            <label for="model-select">検出モデル:</label>
+                            <select id="model-select">
+                                <option value="short">高速モード (推奨)</option>
+                                <option value="full">高精度モード</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="preview-checkbox" checked>
+                                検出結果をプレビュー表示
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="detect-faces-button">顔を検出</button>
+                        <button id="toggle-preview-button" style="display: none;">元画像/検出結果</button>
+                    </div>
+                </div>
+
+                <!-- 顔検出結果エリア -->
+                <div id="faces-area" style="display: none;">
+                    <h3>検出された顔</h3>
+                    <div id="faces-container"></div>
+                    <button id="save-all-button" style="display: none;">すべて保存</button>
+                </div>
+            </div>
+
+            <!-- 登録一覧画面 -->
+            <div id="list-section" class="section">
+                <h2>登録された顔と名前</h2>
+                <div id="saved-faces-container">
+                    <p id="no-data-message">まだ登録されたデータがありません。</p>
+                </div>
+                <button id="clear-all-button" style="display: none;">すべて削除</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js" crossorigin="anonymous"></script>
+    <script src="improved-script.js"></script>
+</body>
+</html>
